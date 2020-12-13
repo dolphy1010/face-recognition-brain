@@ -12,7 +12,7 @@ import './App.css';
 
 //You must add your own API key here from Clarifai.
 const app = new Clarifai.App({
- apiKey: 'YOUR API KEY HERE'
+ apiKey: 'f31916e7cc384fd2a22d9197fd42b8e7'
 });
 
 const particlesOptions = {
@@ -80,7 +80,8 @@ class App extends Component {
   onButtonSubmit = () => {
     this.setState({imageUrl: this.state.input});
     app.models
-      .predict(
+      //.predict(Clarifai.FACE_DETECT_MODEL,
+        //this.state.input)
         // HEADS UP! Sometimes the Clarifai Models can be down or not working as they are constantly getting updated.
         // A good way to check if the model you are using is up, is to check them on the clarifai website. For example,
         // for the Face Detect Mode: https://www.clarifai.com/models/face-detection
@@ -89,13 +90,12 @@ class App extends Component {
         // so you would change from:
         // .predict(Clarifai.FACE_DETECT_MODEL, this.state.input)
         // to:
-        // .predict('c0c0ac362b03416da06ab3fa36fb58e3', this.state.input)
-        Clarifai.FACE_DETECT_MODEL,
-        this.state.input)
+      .predict('c0c0ac362b03416da06ab3fa36fb58e3', this.state.input)
+        
       .then(response => {
         console.log('hi', response)
         if (response) {
-          fetch('http://localhost:3000/image', {
+          fetch('http://localhost:3001/image', {
             method: 'put',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
